@@ -12,7 +12,7 @@ import org.testng.annotations.DataProvider;
 @CucumberOptions(
         plugin = {"pretty"},
         features = {"src/test/resources/features"},
-        glue = {"org.fundacionjala.pivotal"}
+        glue = {"org.fundacionjala.trello"}
 )
 public final class Runner extends AbstractTestNGCucumberTests {
     @Override
