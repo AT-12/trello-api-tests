@@ -14,9 +14,10 @@ import org.testng.annotations.DataProvider;
         features = {"src/test/resources/features"},
         glue = {"org.fundacionjala.trello"}
 )
+
 public final class Runner extends AbstractTestNGCucumberTests {
     @Override
-    @DataProvider
+    @DataProvider(parallel = true)
     public Object[][] scenarios() {
         return super.scenarios();
     }
