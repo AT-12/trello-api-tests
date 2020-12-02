@@ -7,3 +7,7 @@
 /java/
 /logs/
 *.iml
+.classpath
+.project
+.settings/
+bin/
