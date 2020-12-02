@@ -108,3 +108,9 @@ task reExecuteBDDTests(type: Test) {
     scanForTestClasses = false
     finalizedBy 'allureReport'
 }
+
+javadoc {
+    options.charSet = 'UTF-8'
+    options.encoding = 'UTF-8'
+    destinationDir = file("docs")
+}
