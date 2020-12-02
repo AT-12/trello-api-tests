@@ -61,8 +61,8 @@ check.dependsOn jacocoTestReport
 
 test {
     useTestNG()
-    exclude 'org/fundacionjala/fc/runner/**'
-    include 'org/fundacionjala/fc/unit/tests/**'
+    exclude 'org/fundacionjala/trello/runner/**'
+    include 'org/fundacionjala/trello/unit/tests/**'
     testLogging {
         events 'PASSED', 'STARTED', 'FAILED', 'SKIPPED'
     }
@@ -83,12 +83,14 @@ allure {
 
 task executeBDDTests(type: Test) {
     useTestNG()
+    exclude 'org/fundacionjala/trello/unit/tests/**'
     options {
         useDefaultListeners = false
         jvmArgs = ['-Dcucumber.plugin=io.qameta.allure.cucumber6jvm.AllureCucumber6Jvm']
         jvmArgs = ['-Dcucumber.plugin=rerun:build/target/rerun.txt']
         jvmArgs = ['-Dcucumber.filter.tags=' + filterTags]
         jvmArgs = ['-DcucumberThreadCount=' + cucumberThreadCount]
+        jvmArgs = ['-Dkey=' + key]
         jvmArgs = ['-Dtoken=' + token]
     }
     testLogging.showStandardStreams = true
@@ -98,12 +100,14 @@ task executeBDDTests(type: Test) {
 
 task reExecuteBDDTests(type: Test) {
     useTestNG()
+    exclude 'org/fundacionjala/trello/unit/tests/**'
     options {
         useDefaultListeners = false
         jvmArgs = ['-Dcucumber.plugin=io.qameta.allure.cucumber6jvm.AllureCucumber6Jvm']
         jvmArgs = ['-Dcucumber.plugin=rerun:build/target/rerun.txt']
         jvmArgs = ['-Dcucumber.features=@build/target/rerun.txt']
         jvmArgs = ['-DcucumberThreadCount=' + cucumberThreadCount]
+        jvmArgs = ['-Dkey=' + key]
         jvmArgs = ['-Dtoken=' + token]
     }
     testLogging.showStandardStreams = true
