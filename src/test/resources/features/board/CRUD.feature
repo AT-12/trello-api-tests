@@ -21,7 +21,7 @@ Feature: Create Board
       | name | New Board!  |
       | desc | Description |
 
-  @skipScenario @createBoard
+  @functional @createBoard @deleteBoard
   Scenario: Verify board is updated with minimum required parameters
     When the user sends a PUT request to "/boards/{idBoard}" with the following Json data
       """
@@ -31,7 +31,7 @@ Feature: Create Board
       }
      """
     Then verifies response should have the "200" status code
-    And verifies response body should match with "board/boardSchema.json" JSON schema
+    And verifies response body should match with "board/updateBoardSchema.json" JSON schema
     And verifies response should contain the following values
       | name | New Board Updated!  |
       | desc | Description Updated |

@@ -71,7 +71,7 @@ public class Stepdefs {
     @And("verifies response body should match with {string} JSON schema")
     public void verifiesResponseBodyShouldMatchWithJSONSchema(final String schema) {
         JsonSchemaValidator.validate(response, EnvironmentTrello.getInstance().getSchemasPath() + schema);
-        context.saveData("boardID", response.jsonPath().getString("id"));
+        context.saveData("idBoard", response.jsonPath().getString("id"));
     }
 
     /**
@@ -92,8 +92,6 @@ public class Stepdefs {
      */
     @When("the user sends a PUT request to {string} with the following Json data")
     public void sendsAPUTRequestToWithTheFollowingJsonData(final String endpoint, final String body) {
-        Mapper.mapValue("idBoard", context.getData());
-        context.saveData("endpoint", endpoint);
-        response = RequestManager.post(endpoint, body);
+        response = RequestManager.put(Mapper.mapValue(endpoint, context.getData()), body);
     }
 }

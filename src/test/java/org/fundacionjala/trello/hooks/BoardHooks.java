@@ -29,14 +29,14 @@ public class BoardHooks {
      */
     @After(value = "@deleteBoard")
     public void deleteBoard() {
-        String boardID = context.getValueData("boardID");
-        given(context.getRequestSpecification()).when().delete("/boards/".concat(boardID));
+        String idBoard = context.getValueData("idBoard");
+        given(context.getRequestSpecification()).when().delete("/boards/".concat(idBoard));
     }
 
-    /*ese nuevo board hay q crear desde el hhok
-     * Delete the board after execute Stepdefs with the deleteBoard tag.
+    /**
+     * Creates thee board before execute the step with the createBoard tag.
      */
-    @Before(value = "@createBoard")
+    @Before(value = "@createBoard", order = 0)
     public void createBoard() {
          context.setRequestSpec(AuthenticationUtils.getLoggedReqSpec());
          String path = EnvironmentTrello.getInstance().getEnvTemplate() + "/board/createBoard.json";
@@ -45,7 +45,7 @@ public class BoardHooks {
                  .body(new File(path))
                  .when()
                  .post("/boards/");
-         String boardID = response.path("id");
-         context.saveData("boardID", boardID);
+         String idBoard = response.path("id");
+         context.saveData("idBoard", idBoard);
     }
 }
