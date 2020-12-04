@@ -56,4 +56,12 @@ public class Context {
     public String getValueData(final String key) {
         return data.getOrDefault(key, "");
     }
+
+    /**
+     * Gets data map.
+     * @return data map
+     */
+    public Map<String, String> getData() {
+        return data;
+    }
 }
