@@ -27,9 +27,9 @@ public class BoardHooks {
     /**
      * Delete the board after execute Stepdefs with the deleteBoard tag.
      */
-    @After(value = "@deleteBoard")
+    @After(value = "@deleteBoard", order = 1)
     public void deleteBoard() {
-        String idBoard = context.getValueData("idBoard");
+        String idBoard = context.getDataCollection("board").get("id");
         given(context.getRequestSpecification()).when().delete("/boards/".concat(idBoard));
     }
 
@@ -45,7 +45,6 @@ public class BoardHooks {
                  .body(new File(path))
                  .when()
                  .post("/boards/");
-         String idBoard = response.path("id");
-         context.saveData("idBoard", idBoard);
+         context.saveDataCollection("board", response.jsonPath().getMap(""));
     }
 }

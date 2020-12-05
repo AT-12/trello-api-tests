@@ -12,6 +12,7 @@ public class Context {
 
     private RequestSpecification requestSpecification;
     private Map<String, String> data;
+    private Map<String, Map<String, String>> dataCollection;
 
     /**
      * Constructor for the Context.
@@ -19,6 +20,7 @@ public class Context {
     public Context() {
         data = new HashMap<>();
         requestSpecification = null;
+        dataCollection = new HashMap<String, Map<String, String>>();
     }
 
     /**
@@ -63,5 +65,31 @@ public class Context {
      */
     public Map<String, String> getData() {
         return data;
+    }
+
+    /**
+     * Sets data map.
+     * @param mapData
+     */
+    public void setData(final Map<String, String> mapData) {
+        this.data = mapData;
+    }
+
+    /**
+     * Gets data map collection.
+     * @param key
+     * @return dataCollection
+     */
+    public Map<String, String> getDataCollection(final String key) {
+        return dataCollection.getOrDefault(key, new HashMap<String, String>());
+    }
+
+    /**
+     * Saves the data in to data collection.
+     * @param key
+     * @param dataMap
+     */
+    public void saveDataCollection(final String key, final Map<String, String> dataMap) {
+        dataCollection.put(key, dataMap);
     }
 }

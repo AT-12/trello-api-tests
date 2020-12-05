@@ -47,9 +47,9 @@ public class Stepdefs {
      * @param endpoint
      * @param body
      */
-    @When("the user sends a POST request to {string} with the following Json data")
+    @When("The user sends a POST request to {string} with the following Json data")
     public void sendsAPOSTRequestToWithTheFollowingJsonData(final String endpoint, final String body) {
-        context.saveData("endpoint", endpoint);
+        context.saveData("endpointBoard", endpoint);
         response = RequestManager.post(endpoint, body);
     }
 
@@ -58,40 +58,60 @@ public class Stepdefs {
      *
      * @param expectedStatusCode
      */
-    @Then("verifies response should have the \"{int}\" status code")
+    @Then("Verifies response should have the \"{int}\" status code")
     public void verifiesResponseShouldHaveTheStatusCode(final int expectedStatusCode) {
         Assert.assertEquals(response.statusCode(), expectedStatusCode);
     }
 
     /**
      * Validates response body json schema.
-     *
+     * @param key
      * @param schema
      */
-    @And("verifies response body should match with {string} JSON schema")
-    public void verifiesResponseBodyShouldMatchWithJSONSchema(final String schema) {
+    @And("Verifies the {string} response body should match with {string} JSON schema")
+    public void verifiesResponseBodyShouldMatchWithJSONSchema(final String key, final String schema) {
         JsonSchemaValidator.validate(response, EnvironmentTrello.getInstance().getSchemasPath() + schema);
-        context.saveData("idBoard", response.jsonPath().getString("id"));
+        context.saveDataCollection(key, response.jsonPath().getMap(""));
     }
 
     /**
      * Validates response values.
-     *
-     * @param expectedValues
+     * @param key
+     * @param expectValues
      */
-    @And("verifies response should contain the following values")
-    public void verifiesResponseShouldContainTheFollowingValues(final Map<String, String> expectedValues) {
-        ResponseBodyValidator.validate(response, expectedValues);
+    @And("Verifies the {string} response should contain the following values")
+    public void verifiesResponseShouldContainFollowingValues(final String key, final Map<String, String> expectValues) {
+        ResponseBodyValidator.validateBody(response, context.getDataCollection(key), expectValues);
     }
 
     /**
      * Sends put request.
-     *
+     * @param key
      * @param endpoint
      * @param body
      */
-    @When("the user sends a PUT request to {string} with the following Json data")
-    public void sendsAPUTRequestToWithTheFollowingJsonData(final String endpoint, final String body) {
-        response = RequestManager.put(Mapper.mapValue(endpoint, context.getData()), body);
+    @When("The user sends a PUT {string} request to {string} with the following Json data")
+    public void sendsAPUTRequestToWithTheFollowingJsonData(final String key, final String endpoint, final String body) {
+        response = RequestManager.put(Mapper.mapValue(endpoint, context.getDataCollection(key)), body);
+    }
+
+    /**
+     * Validates response values.
+      * @param key
+     * @param endpoint
+     */
+    @When("The user sends a GET {string} request to {string}")
+    public void sendsAGETRequestTo(final String key, final String endpoint) {
+         response = RequestManager.get(Mapper.mapValue(endpoint, context.getDataCollection(key)));
+    }
+
+    /**
+     * Validates response values.
+     * @param key
+     * @param endpoint
+     */
+    @When("The user sends a DELETE {string} request to {string}")
+    public void sendsADELETERequestTo(final String key, final String endpoint) {
+        response = RequestManager.delete(Mapper.mapValue(endpoint, context.getDataCollection(key)));
     }
 }
