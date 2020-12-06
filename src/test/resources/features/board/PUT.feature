@@ -20,3 +20,14 @@ Feature: Put Board
     And Verifies the "board" response should contain the following values
       | name | New Board Updated!  |
       | desc | Description Updated |
+
+@negative
+  Scenario: Verify board is updated with minimum required parameters
+    When The user sends a PUT "board" request to "/boards/badNumber" with the following Json data
+      """
+      {
+        "name" : "New Board Updated!",
+        "desc" : "Description Updated"
+      }
+     """
+    Then Verifies response should have the "400" status code

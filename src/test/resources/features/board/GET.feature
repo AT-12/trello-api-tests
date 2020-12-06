@@ -15,3 +15,8 @@ Feature: Get Board
       | id   | {id}   |
       | name | {name} |
       | desc | {desc} |
+
+  @negative
+  Scenario: Verify that is not possible obtain a single board
+    When The user sends a GET "board" request to "/boards/badNumber"
+    Then Verifies response should have the "400" status code

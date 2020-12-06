@@ -21,3 +21,13 @@ Feature: Create Board
       | name | New Board!  |
       | desc | Description |
 
+  @negative
+  Scenario: Verify board is not possible to create a board with a wrong JSON
+    When The user sends a POST request to "/boards" with the following Json data
+      """
+      {
+        "nameBoard" : "New Board!",
+        "desc" : "Description"
+      }
+     """
+    Then Verifies response should have the "400" status code
