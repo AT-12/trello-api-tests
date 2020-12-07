@@ -8,42 +8,41 @@ import org.fundacionjala.trello.config.EnvironmentTrello;
 import org.fundacionjala.trello.utils.AuthenticationUtils;
 import org.fundacionjala.trello.context.Context;
 import org.json.JSONObject;
-
 import static io.restassured.RestAssured.given;
 
-public class LabelHook {
+public class ListHook {
     private Context context;
 
     /**
      * Initializes an instance of Context class.
      * @param contextToSet
      */
-    public LabelHook(final Context contextToSet) {
+    public ListHook(final Context contextToSet) {
         this.context = contextToSet;
     }
 
     /**
-     * Creates label before execute the step with the createLabel tag.
+     * Creates list before execute the step with the createList tag.
      */
-    @Before(value = "@createLabel", order = 1)
-    public void createLabel() {
-        String endpoint = EnvironmentTrello.getInstance().getBaseUrl() + "/labels/";
+    @Before(value = "@createList", order = 1)
+    public void createList() {
+        String endpoint = EnvironmentTrello.getInstance().getBaseUrl() + "/lists/";
         JSONObject json = new JSONObject();
-        json.put("name", "testLabel");
-        json.put("color", "black");
+        json.put("name", "testList");
         json.put("idBoard", context.getDataCollection("board").get("id"));
         RequestManager.setRequestSpec(AuthenticationUtils.getLoggedReqSpec());
         Response response = RequestManager.post(endpoint, json.toString());
-        context.saveDataCollection("label", response.jsonPath().getMap(""));
+        context.saveDataCollection("list", response.jsonPath().getMap(""));
     }
 
     /**
-     * Delete the label after execute Stepdefs with the deleteLabel tag.
+     * Delete the list after execute Stepdefs with the deleteList tag.
      */
-    @After(value = "@deleteLabel", order = 0)
-    public void deleteLabel() {
-        String labelId = context.getDataCollection(("label")).get("id");
+    @After(value = "@deleteList", order = 1)
+    public void deleteList() {
+        String labelId = context.getDataCollection(("list")).get("id");
         context.setRequestSpec(AuthenticationUtils.getLoggedReqSpec());
-        given(context.getRequestSpecification()).when().delete("/labels/".concat(labelId));
+        given(context.getRequestSpecification()).when().delete("/lists/".concat(labelId));
     }
 }
+
