@@ -14,7 +14,6 @@ import org.fundacionjala.trello.context.Context;
 import org.fundacionjala.trello.utils.AuthenticationUtils;
 import org.fundacionjala.trello.utils.ResponseBodyValidator;
 import org.testng.Assert;
-
 import java.util.Map;
 
 public class Stepdefs {
@@ -101,7 +100,7 @@ public class Stepdefs {
      */
     @When("The user sends a GET {string} request to {string}")
     public void sendsAGETRequestTo(final String key, final String endpoint) {
-         response = RequestManager.get(Mapper.mapValue(endpoint, context.getDataCollection(key)));
+        response = RequestManager.get(Mapper.mapValue(endpoint, context.getDataCollection(key)));
     }
 
     /**
