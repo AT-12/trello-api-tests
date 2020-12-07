@@ -23,4 +23,13 @@ public class EnvironmentTrelloTest {
         EnvironmentTrello reader = EnvironmentTrello.getInstance();
         Assert.assertNotNull(reader.getEnvApiKey());
     }
+
+    /**
+     * Test get template from the properties file.
+     */
+    @Test
+    public void testGetEnvTemplate() {
+        EnvironmentTrello reader = EnvironmentTrello.getInstance();
+        Assert.assertNotNull(reader.getEnvTemplate());
+    }
 }

@@ -9,6 +9,7 @@ public final class EnvironmentTrello extends Environment {
     private static final String GRADLE_FILE = "gradle.properties";
     private static final String API_TOKEN = "token";
     private static final String API_KEY = "key";
+    private static final String TEMPLATE_PATH = "templatesPath";
     private static EnvironmentTrello environment;
 
     /**
@@ -43,5 +44,13 @@ public final class EnvironmentTrello extends Environment {
      */
     public String getEnvApiKey() {
         return this.getEnvProperty(API_KEY);
+    }
+
+    /**
+     * Gets environment template path.
+     * @return environment template path.
+     */
+    public String getEnvTemplate() {
+        return this.getEnvProperty(TEMPLATE_PATH);
     }
 }
