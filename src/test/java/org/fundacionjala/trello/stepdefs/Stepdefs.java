@@ -47,10 +47,9 @@ public class Stepdefs {
      * @param endpoint
      * @param body
      */
-    @When("The user sends a POST request to {string} with the following Json data")
-    public void sendsAPOSTRequestToWithTheFollowingJsonData(final String endpoint, final String body) {
-        context.saveData("endpointBoard", endpoint);
-        response = RequestManager.post(endpoint, body);
+    @When("The user sends a POST {string} request to {string} with the following Json data")
+    public void sendsAPOSTRequestToWithTheFollowingJsonData(final String key, final String endpoint, final String body) {
+        response = RequestManager.post(endpoint, Mapper.mapValue(body, context.getDataCollection(key)));
     }
 
     /**
