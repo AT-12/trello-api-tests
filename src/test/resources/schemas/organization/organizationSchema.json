@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "properties": {
+    "id": {
+      "$id": "#/properties/id"
+    },
+    "name": {
+      "$id": "#/properties/name"
+    },
+    "displayName": {
+      "$id": "#/properties/displayName"
+    },
+    "descData": {
+      "$id": "#/properties/descData",
+      "properties": {
+        "emoji": {
+          "$id": "#/properties/descData/properties/emoji"
+        }
+      }
+    },
+    "website": {
+      "$id": "#/properties/website"
+    },
+    "teamType": {
+      "$id": "#/properties/teamType"
+    },
+    "desc": {
+      "$id": "#/properties/desc"
+    },
+    "url": {
+      "$id": "#/properties/url"
+    },
+    "logoHash": {
+      "$id": "#/properties/logoHash"
+    },
+    "logoUrl": {
+      "$id": "#/properties/logoUrl"
+    },
+    "products": {
+      "$id": "#/properties/products",
+      "items": {
+        "$id": "#/properties/products/items"
+      }
+    },
+    "powerUps": {
+      "$id": "#/properties/powerUps",
+      "items": {
+        "$id": "#/properties/powerUps/items"
+      }
+    },
+    "idMemberCreator": {
+      "$id": "#/properties/idMemberCreator"
+    },
+    "limits": {
+      "$id": "#/properties/limits"
+    }
+  }
+}
