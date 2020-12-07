@@ -40,8 +40,8 @@ public class CardHook {
      */
     @After(value = "@deleteCard", order = 0)
     public void deleteCard() {
-        String labelId = context.getDataCollection(("card")).get("id");
+        String cardId = context.getDataCollection(("card")).get("id");
         context.setRequestSpec(AuthenticationUtils.getLoggedReqSpec());
-        given(context.getRequestSpecification()).when().delete("/cards/".concat(labelId));
+        given(context.getRequestSpecification()).when().delete("/cards/".concat(cardId));
     }
 }

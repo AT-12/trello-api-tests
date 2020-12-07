@@ -40,9 +40,9 @@ public class ListHook {
      */
     @After(value = "@deleteList", order = 1)
     public void deleteList() {
-        String labelId = context.getDataCollection(("list")).get("id");
+        String listId = context.getDataCollection(("list")).get("id");
         context.setRequestSpec(AuthenticationUtils.getLoggedReqSpec());
-        given(context.getRequestSpecification()).when().delete("/lists/".concat(labelId));
+        given(context.getRequestSpecification()).when().delete("/lists/".concat(listId));
     }
 }
 
