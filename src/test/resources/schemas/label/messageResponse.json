@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "required": [
+    "id",
+    "idBoard",
+    "name",
+    "color"
+  ],
+  "properties": {
+    "id": {
+      "$id": "#/properties/id"
+    },
+    "idBoard": {
+      "$id": "#/properties/idBoard"
+    },
+    "name": {
+      "$id": "#/properties/name"
+    },
+    "color": {
+      "$id": "#/properties/color"
+    }
+  }
+}
