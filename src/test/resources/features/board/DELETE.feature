@@ -1,6 +1,6 @@
-Feature: Delete Label
+Feature: Delete Board
 
-  In order to delete a Label in trello
+  In order to delete a Board in trello
   Authenticated as valid Trello API consumer
 
   Background: Sets authentication

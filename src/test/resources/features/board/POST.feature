@@ -8,7 +8,7 @@ Feature: Create Board
 
   @functional @deleteBoard
   Scenario: Verify board is created with minimum required parameters
-    When The user sends a POST request to "/boards" with the following Json data
+    When The user sends a POST "board" request to "/boards" with the following Json data
       """
       {
         "name" : "New Board!",
@@ -23,7 +23,7 @@ Feature: Create Board
 
   @negative
   Scenario: Verify board is not possible to create a board with a wrong JSON
-    When The user sends a POST request to "/boards" with the following Json data
+    When The user sends a POST "board" request to "/boards" with the following Json data
       """
       {
         "nameBoard" : "New Board!",
