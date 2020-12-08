@@ -18,3 +18,13 @@ Feature: Get Card
   Scenario: Verify is not possible to obtain a card with invalid id
     When The user sends a GET "card" request to "/cards/invalidId"
     Then Verifies response should have the "400" status code
+
+  @createBoard @createList @createCard @deleteCard @deleteList @deleteBoard @functional
+  Scenario: Verify is possible to obtain the board a card is on
+    When The user sends a GET "card" request to "/cards/{id}/board"
+    Then Verifies response should have the "200" status code
+
+  @createBoard @createList @createCard @deleteCard @deleteList @deleteBoard @functional
+  Scenario: Verify is possible to obtain the list a card is in
+    When The user sends a GET "card" request to "/cards/{id}/list"
+    Then Verifies response should have the "200" status code

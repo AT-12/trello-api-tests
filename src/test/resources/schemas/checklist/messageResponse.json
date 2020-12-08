@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "idCard",
+    "pos",
+    "idBoard",
+    "checkItems"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "idCard": {
+      "type": "string"
+    },
+    "pos": {
+      "type": "integer"
+    },
+    "idBoard": {
+      "type": "string"
+    },
+    "checkItems": {
+      "type": "array"
+    }
+  }
+}
