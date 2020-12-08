@@ -12,4 +12,4 @@ addons:
 script:
   - ./gradlew check
   - sonar-scanner
-  - ./gradlew executeBDDTests -Pkey=$TRELLO_KEY -Ptoken=$TRELLO_TOKEN
+  - ./gradlew runTests -Pkey=$TRELLO_KEY -Ptoken=$TRELLO_TOKEN -Prpuuid=$RP_UUID -P rplaunch=$RP_LAUNCH -Prpproject=$RP_PROJECT
