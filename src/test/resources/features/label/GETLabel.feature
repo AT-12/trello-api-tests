@@ -5,7 +5,7 @@ Feature: Get Label
   Background: Sets authentication
     Given The user sets valid authentication to request
 
-  @createBoard @createLabel @deleteBoard @functional
+  @createBoard @createLabel @deleteBoard @functional @smoke
   Scenario: Verify is possible to obtain a label
     When The user sends a GET "label" request to "/labels/{id}"
     Then Verifies response should have the "200" status code
