@@ -14,11 +14,15 @@ version '1.0'
 sourceCompatibility = 1.11
 
 repositories {
+    jcenter {
+        url 'https://dl.bintray.com/epam/reportportal'
+    }
     mavenCentral()
     maven { url "https://jitpack.io" }
 }
 
 dependencies {
+    compile group: 'com.epam.reportportal', name: 'agent-java-testng', version: '5.0.8'
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.14.0'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.0'
     compile group: 'org.json', name: 'json', version: '20180813'
@@ -64,6 +68,8 @@ test {
     useTestNG()
     exclude 'org/fundacionjala/trello/runner/**'
     include 'org/fundacionjala/trello/unit/tests/**'
+    systemProperty 'usedefaultlisteners', false
+    systemProperty 'listener', 'com.epam.reportportal.testng.ReportPortalTestNGListener'
     testLogging {
         events 'PASSED', 'STARTED', 'FAILED', 'SKIPPED'
     }
@@ -81,6 +87,7 @@ allure {
     aspectjweaver = true
     allureJavaVersion = '2.13.6'
 }
+
 
 task executeBDDTests(type: Test) {
     useTestNG()
@@ -120,4 +127,25 @@ javadoc {
     options.charSet = 'UTF-8'
     options.encoding = 'UTF-8'
     destinationDir = file("docs")
+}
+
+task runTests(type: Test) {
+    useTestNG {
+        testLogging.showStandardStreams = true
+        useDefaultListeners = false
+        listeners << 'com.epam.reportportal.testng.ReportPortalTestNGListener'
+    }
+    options {
+        useDefaultListeners = false
+        jvmArgs = ['-Dcucumber.plugin=io.qameta.allure.cucumber6jvm.AllureCucumber6Jvm']
+        jvmArgs = ['-Dcucumber.plugin=rerun:build/target/rerun.txt']
+        jvmArgs = ['-Dcucumber.filter.tags=' + filterTags]
+        jvmArgs = ['-DcucumberThreadCount=' + cucumberThreadCount]
+        jvmArgs = ['-Dkey=' + key]
+        jvmArgs = ['-Dtoken=' + token]
+        jvmArgs = ['-Drp.endpoint=' + rpendpoint ]
+        jvmArgs = ['-Drp.uuid=' + rpuuid ]
+        jvmArgs = ['-Drp.launch=' + rplaunch ]
+        jvmArgs = ['-Drp.project=' + rpproject ]
+    }
 }
