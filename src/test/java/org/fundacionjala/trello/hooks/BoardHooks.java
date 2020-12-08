@@ -30,6 +30,7 @@ public class BoardHooks {
     @After(value = "@deleteBoard", order = 1)
     public void deleteBoard() {
         String idBoard = context.getDataCollection("board").get("id");
+        context.setRequestSpec(AuthenticationUtils.getLoggedReqSpec());
         given(context.getRequestSpecification()).when().delete("/boards/".concat(idBoard));
     }
 

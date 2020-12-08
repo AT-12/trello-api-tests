@@ -41,6 +41,26 @@ public class Stepdefs {
     }
 
     /**
+     * Sets invalid authentication headers.
+     */
+    @Given("The user sets authentication using only an API key")
+    public void setsAuthenticationUsingOnlyKey() {
+        RequestSpecification reqSpec = AuthenticationUtils.getNotLoggedWithKeyReqSpec();
+        RequestManager.setRequestSpec(reqSpec);
+        context.setRequestSpec(reqSpec);
+    }
+
+    /**
+     * Sets invalid authentication headers.
+     */
+    @Given("The user sets authentication using only an API token")
+    public void setsAuthenticationUsingOnlyToken() {
+        RequestSpecification reqSpec = AuthenticationUtils.getNotLoggedWithTokenReqSpec();
+        RequestManager.setRequestSpec(reqSpec);
+        context.setRequestSpec(reqSpec);
+    }
+
+    /**
      * Sends post request.
      * @param key
      * @param endpoint
@@ -52,7 +72,7 @@ public class Stepdefs {
     }
 
     /**
-     * Validate the response status code.
+     * Validates the response status code.
      *
      * @param expectedStatusCode
      */
@@ -70,6 +90,15 @@ public class Stepdefs {
     public void verifiesResponseBodyShouldMatchWithJSONSchema(final String key, final String schema) {
         JsonSchemaValidator.validate(response, EnvironmentTrello.getInstance().getSchemasPath() + schema);
         context.saveDataCollection(key, response.jsonPath().getMap(""));
+    }
+
+    /**
+     * Validates the response body.
+     * @param responseBody
+     */
+    @And("Verifies response contains the following text value")
+    public void verifiesResponseContainsTheFollowingTextValue(final String responseBody) {
+        Assert.assertEquals(response.getBody().asString(), responseBody);
     }
 
     /**

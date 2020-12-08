@@ -1,11 +1,9 @@
-
 package org.fundacionjala.trello.utils;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.fundacionjala.trello.config.EnvironmentTrello;
-
 
 public final class AuthenticationUtils {
 
@@ -44,6 +42,32 @@ public final class AuthenticationUtils {
     public static RequestSpecification getNotLoggedReqSpec() {
         RequestSpecification request = RestAssured.given();
         request.baseUri(BASE_URL_API);
+        return request;
+    }
+
+    /**
+     * Get request specifications.
+     *
+     * @return request.
+     */
+    public static RequestSpecification getNotLoggedWithKeyReqSpec() {
+        RequestSpecification request = RestAssured.given();
+        request.baseUri(BASE_URL_API)
+                .contentType(ContentType.JSON.toString())
+                .queryParam(KEY, API_KEY);
+        return request;
+    }
+
+    /**
+     * Get request specifications.
+     *
+     * @return request.
+     */
+    public static RequestSpecification getNotLoggedWithTokenReqSpec() {
+        RequestSpecification request = RestAssured.given();
+        request.baseUri(BASE_URL_API)
+                .contentType(ContentType.JSON.toString())
+                .queryParam(TOKEN, API_TOKEN);
         return request;
     }
 }

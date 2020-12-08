@@ -51,7 +51,7 @@ Feature: Create Label
       | message | Invalid name |
       | error   | ERROR        |
 
-  @createBoard @deleteBoard @negative
+  @createBoard @deleteBoard @functional
   Scenario: Verify that is possible to create a Label without color
     When The user sends a POST "board" request to "/labels/" with the following Json data
       """
@@ -64,6 +64,34 @@ Feature: Create Label
     And Verifies the "label" response body should match with "/label/messageResponse.json" JSON schema
     And Verifies the "label" response should contain the following values
       | name  | labelTest |
+
+  @createBoard @deleteBoard @functional
+  Scenario: Verify that is possible to create a Label with numbers in its name
+    When The user sends a POST "board" request to "/labels/" with the following Json data
+      """
+      {
+        "name" :"labelTest 1",
+        "idBoard" :"{id}"
+      }
+      """
+    Then Verifies response should have the "200" status code
+    And Verifies the "label" response body should match with "/label/messageResponse.json" JSON schema
+    And Verifies the "label" response should contain the following values
+      | name  | labelTest 1 |
+
+  @createBoard @deleteBoard @functional
+  Scenario: Verify that is possible to create a Label with numbers special caracters in its name
+    When The user sends a POST "board" request to "/labels/" with the following Json data
+      """
+      {
+        "name" :"labelTest '1'",
+        "idBoard" :"{id}"
+      }
+      """
+    Then Verifies response should have the "200" status code
+    And Verifies the "label" response body should match with "/label/messageResponse.json" JSON schema
+    And Verifies the "label" response should contain the following values
+      | name  | labelTest '1' |
 
   @createBoard @deleteBoard @negative
   Scenario: Verify that is not possible to create a Label with invalid color
