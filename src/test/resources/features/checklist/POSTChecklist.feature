@@ -30,7 +30,7 @@ Feature: Create Checklist
     Then Verifies response should have the "200" status code
 
   @negative @createBoard @createList @createCard @deleteBoard
-  Scenario: Verify checklist is not possible to create a checklist with a wrong idCard
+  Scenario: Verify that is not possible to create a checklist with a wrong idCard
     When The user sends a POST "card" request to "/checklists/" with the following Json data
       """
       {
@@ -41,7 +41,7 @@ Feature: Create Checklist
     Then Verifies response should have the "400" status code
 
   @negative @createBoard @createList @createCard @deleteBoard
-  Scenario: Verify checklist is not possible to create a checklist without a idCard
+  Scenario: Verify that is not possible to create a checklist without a idCard
     When The user sends a POST "card" request to "/checklists/" with the following Json data
       """
       {
