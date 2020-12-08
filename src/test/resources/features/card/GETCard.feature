@@ -5,7 +5,7 @@ Feature: Get Card
   Background: Sets authentication
     Given The user sets valid authentication to request
 
-  @createBoard @createList @createCard @deleteCard @deleteList @deleteBoard @functional
+  @createBoard @createList @createCard @deleteCard @deleteList @deleteBoard @functional @smoke
   Scenario: Verify is possible to obtain a card
     When The user sends a GET "card" request to "/cards/{id}"
     Then Verifies response should have the "200" status code

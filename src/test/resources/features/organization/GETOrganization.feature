@@ -6,7 +6,7 @@ Feature: Get Organization
   Background: Sets authentication
     Given The user sets valid authentication to request
 
-  @createOrganization @deleteOrganization
+  @createOrganization @deleteOrganization @smoke
   Scenario: Verify that is possible to obtain a single Organization
     When The user sends a GET "organization" request to "/organizations/{id}"
     Then Verifies response should have the "200" status code
