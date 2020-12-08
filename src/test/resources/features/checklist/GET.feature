@@ -1,4 +1,4 @@
-Feature: Get Board
+Feature: Get Checklist
 
   In order to obtain a board in trello
   Authenticated as valid Trello API consumer
@@ -6,17 +6,20 @@ Feature: Get Board
   Background: Sets authentication
     Given The user sets valid authentication to request
 
-  @createBoard @deleteBoard
-  Scenario: Verify that is possible to obtain a single board
-    When The user sends a GET "board" request to "/boards/{id}"
+  @createBoard @createList @createCard @createChecklist @deleteCard @deleteList @deleteBoard @functional
+  Scenario: Verify that is possible to retrieve all checklist as list
+    When The user sends a GET "card" request to "/cards/{id}/checklists"
     Then Verifies response should have the "200" status code
-    And Verifies the "board" response body should match with "board/listBoardSchema.json" JSON schema
-    And Verifies the "board" response should contain the following values
-      | id   | {id}   |
-      | name | {name} |
-      | desc | {desc} |
 
-  @negative
-  Scenario: Verify that is not possible obtain a single board
-    When The user sends a GET "board" request to "/boards/badNumber"
+  @createBoard @createList @createCard @createChecklist @deleteChecklist @deleteCard @deleteList @deleteBoard @functional
+  Scenario: Verify is possible to obtain a checklist
+    When The user sends a GET "checklist" request to "/checklists/{id}"
+    Then Verifies response should have the "200" status code
+    And Verifies the "checklist" response body should match with "checklist/messageResponse.json" JSON schema
+    And Verifies the "checklist" response should contain the following values
+      | name | {name} |
+
+  @createBoard @createList @deleteList @createCard @createChecklist @deleteCheckList @deleteCard @deleteBoard @functional
+  Scenario: Verify is not possible to obtain a checklist with invalid id
+    When The user sends a GET "checklist" request to "/checklists/invalidId"
     Then Verifies response should have the "400" status code

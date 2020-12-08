@@ -2,20 +2,19 @@ package org.fundacionjala.trello.hooks;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
-import io.cucumber.messages.internal.com.google.gson.JsonObject;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.fundacionjala.core.client.RequestManager;
 import org.fundacionjala.trello.config.EnvironmentTrello;
 import org.fundacionjala.trello.context.Context;
 import org.fundacionjala.trello.utils.AuthenticationUtils;
-
-import java.io.File;
+import org.json.JSONObject;
 
 import static io.restassured.RestAssured.given;
 
 public class ChecklistHooks {
 
     private Context context;
+    private static final int ORDER = 3;
 
     /**
      * Initializes an instance of Context class.
@@ -26,56 +25,26 @@ public class ChecklistHooks {
     }
 
     /**
-     * Delete the board after execute Stepdefs with the deleteBoard tag.
+     * Creates checklist before execute the step with the createChecklist tag.
      */
-    @After(value = "@deleteList", order = 1)
-    public void deleteList() {
-        String idList = context.getDataCollection("list").get("id");
-        given(context.getRequestSpecification()).when().delete("/boards/".concat(idList));
+    @Before(value = "@createChecklist", order = ORDER)
+    public void createChecklist() {
+        String endpoint = EnvironmentTrello.getInstance().getBaseUrl() + "/checklists/";
+        JSONObject json = new JSONObject();
+        json.put("name", "testChecklist");
+        json.put("idCard", context.getDataCollection("card").get("id"));
+        RequestManager.setRequestSpec(AuthenticationUtils.getLoggedReqSpec());
+        Response response = RequestManager.post(endpoint, json.toString());
+        context.saveDataCollection("checklist", response.jsonPath().getMap(""));
     }
 
     /**
-     * Creates thee board before execute the step with the createBoard tag.
+     * Delete the checklist after execute Stepdefs with the deleteChecklist tag.
      */
-    @Before(value = "@createList", order = 0)
-    public void createList() {
-        String idBoard = context.getDataCollection("board").get("id");
-         context.setRequestSpec(AuthenticationUtils.getLoggedReqSpec());
-        JsonObject data = new JsonObject();
-        data.addProperty("name","new list hook");
-        data.addProperty("idBoard",idBoard);
-         Response response = given(context.getRequestSpecification())
-                 .contentType(ContentType.JSON)
-                 .body(data.toString())
-                 .when()
-                 .post("/boards/");
-         context.saveDataCollection("list", response.jsonPath().getMap(""));
-    }
-    /**
-     * Delete the board after execute Stepdefs with the deleteBoard tag.
-     */
-    @After(value = "@deleteCard", order = 1)
-    public void deleteCard() {
-        String idBoard = context.getDataCollection("card").get("id");
-        given(context.getRequestSpecification()).when().delete("/cards/".concat(idBoard));
-    }
-
-    /**
-     * Creates thee board before execute the step with the createBoard tag.
-     */
-    @Before(value = "@createCard", order = 0)
-    public void createCard() {
-        String idList = context.getDataCollection("list").get("id");
+    @After(value = "@deleteChecklist", order = 0)
+    public void deleteChecklist() {
+        String checklistId = context.getDataCollection(("checklist")).get("id");
         context.setRequestSpec(AuthenticationUtils.getLoggedReqSpec());
-        JsonObject data = new JsonObject();
-        data.addProperty("name","new card hook");
-        data.addProperty("idList",idList);
-        //String path = EnvironmentTrello.getInstance().getEnvTemplate() + "/board/createBoard.json";
-        Response response = given(context.getRequestSpecification())
-                .contentType(ContentType.JSON)
-                .body(data.toString())
-                .when()
-                .post("/cards/");
-        context.saveDataCollection("card", response.jsonPath().getMap(""));
+        given(context.getRequestSpecification()).when().delete("/checklists/".concat(checklistId));
     }
 }
